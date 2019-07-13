@@ -1,12 +1,14 @@
  ## APNGのサンプル
  
-line/apng-drawable を利用したAPNGのアニメーションサンプルです。
-https://github.com/line/apng-drawable
+line/apng-drawable を利用したAPNGのアニメーションサンプルです。 
+
+[https://github.com/line/apng-drawable](https://github.com/line/apng-drawable)
 
 ## サンプル画像
 
 https://en.wikipedia.org/wiki/APNG
-![](https://en.wikipedia.org/wiki/APNG#/media/File:Animated_PNG_example_bouncing_beach_ball.png)
+
+![](./app/src/main/res/drawable/apng.png)
  
 ## 環境など
 
