@@ -9,6 +9,10 @@ line/apng-drawable を利用したAPNGのアニメーションサンプルです
 https://en.wikipedia.org/wiki/APNG
 
 ![](./app/src/main/res/drawable/apng.png)
+
+## スクリーンレコード
+
+![](./sample/record.gif)
  
 ## 環境など
 
