@@ -21,4 +21,5 @@ https://en.wikipedia.org/wiki/APNG
 - AndroidX
 - DataBinding
 - Kotlin
-- apng-drawable  1.6.0
+- com.linecorp:apng 1.6.0
+- com.mindorks.android:prdownloader:0.6.0
