@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
         loadDefaultApng()
     }
 
+    /**
+     * Loads the default APNG image from the resources and displays it in the ImageView.
+     */
     private fun loadDefaultApng() {
         ApngDrawable.decode(resources, R.drawable.apng).apply {
             setTargetDensity(resources.displayMetrics)
@@ -40,6 +43,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Initiates the download of an APNG image from the given URL and displays it once downloaded.
+     *
+     * @param url The URL of the APNG image to be downloaded.
+     */
     private fun loadApngFromUrl(url: String) {
         setButtonsEnabled(false)
 
@@ -61,6 +69,11 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+    /**
+     * Decodes the provided APNG file and displays it in the ImageView.
+     *
+     * @param file The APNG file to be decoded and displayed.
+     */
     private fun displayApng(file: File) {
         drawable?.clearAnimationCallbacks()
         drawable = ApngDrawable.decode(file).apply {
@@ -71,6 +84,11 @@ class MainActivity : AppCompatActivity() {
         binding.imageView.setImageDrawable(drawable)
     }
 
+    /**
+     * Enables or disables the buttons based on the provided parameter.
+     *
+     * @param isEnabled A boolean indicating whether the buttons should be enabled or not.
+     */
     private fun setButtonsEnabled(isEnabled: Boolean) {
         buttons.forEach { it.isEnabled = isEnabled }
     }
