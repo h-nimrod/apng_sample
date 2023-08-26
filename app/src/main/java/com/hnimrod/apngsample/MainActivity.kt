@@ -30,10 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        loadDefaultAPNG()
+        loadDefaultApng()
     }
 
-    private fun loadDefaultAPNG() {
+    private fun loadDefaultApng() {
         ApngDrawable.decode(resources, R.drawable.apng).apply {
             setTargetDensity(resources.displayMetrics)
             binding.imageView.setImageDrawable(this)
