@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.downloader.OnDownloadListener
-import com.downloader.PRDownloader
 import com.hnimrod.apngsample.databinding.ActivityMainBinding
 import com.linecorp.apng.ApngDrawable
 import okhttp3.Call
@@ -26,8 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        PRDownloader.initialize(applicationContext)
 
         binding.button1.setOnClickListener { loadApngFromUrl("https://raw.githubusercontent.com/h-nimrod/apng_sample/master/img/sample0.png") }
         binding.button2.setOnClickListener { loadApngFromUrl("https://raw.githubusercontent.com/h-nimrod/apng_sample/master/img/sample2.png") }
