@@ -30,7 +30,9 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.linecorp:apng:1.11.0'
-    implementation 'com.mindorks.android:prdownloader:0.6.0'
+    def okhttp_version = '4.11.0'
+    implementation "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
