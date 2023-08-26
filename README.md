@@ -17,9 +17,9 @@ https://en.wikipedia.org/wiki/APNG
 ## 環境など
 
 - minSdkVersion 21
-- targetSdkVersion 28
+- targetSdkVersion 33
 - AndroidX
 - DataBinding
 - Kotlin
-- com.linecorp:apng 1.6.0
+- com.linecorp:apng 1.11.0
 - com.mindorks.android:prdownloader:0.6.0
