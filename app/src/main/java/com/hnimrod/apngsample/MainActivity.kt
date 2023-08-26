@@ -8,7 +8,14 @@ import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
 import com.hnimrod.apngsample.databinding.ActivityMainBinding
 import com.linecorp.apng.ApngDrawable
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,22 +59,40 @@ class MainActivity : AppCompatActivity() {
     private fun loadApngFromUrl(url: String) {
         setButtonsEnabled(false)
 
-        val cacheDirPath = cacheDir.absolutePath
-        PRDownloader.download(url, cacheDirPath, CACHE_FILE_NAME)
-            .build()
-            .start(object : OnDownloadListener {
-                override fun onDownloadComplete() {
-                    val file = File("$cacheDirPath/$CACHE_FILE_NAME")
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val client = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body ?: kotlin.run {
+                    runOnUiThread {
+                        setButtonsEnabled(true)
+                        Toast.makeText(this@MainActivity, "Error downloading file", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+
+                val file = File("${cacheDir.absolutePath}/$CACHE_FILE_NAME")
+                file.outputStream().use { fileOut ->
+                    body.byteStream().use { bodyIn ->
+                        bodyIn.copyTo(fileOut)
+                    }
+                }
+                runOnUiThread {
                     displayApng(file)
                     setButtonsEnabled(true)
                 }
+            }
 
-                override fun onError(error: com.downloader.Error?) {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
                     setButtonsEnabled(true)
-                    val errorMessage = error?.toString() ?: "some error occurred"
-                    Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, e.toString(), Toast.LENGTH_LONG).show()
                 }
-            })
+            }
+        })
     }
 
     /**
