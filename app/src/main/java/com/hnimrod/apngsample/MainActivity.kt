@@ -1,7 +1,6 @@
 package com.hnimrod.apngsample
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var drawable: ApngDrawable? = null
-    private val buttons = mutableListOf<View>()
+    private val buttons by lazy { listOf(binding.button1, binding.button2, binding.button3) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,27 +22,20 @@ class MainActivity : AppCompatActivity() {
 
         PRDownloader.initialize(applicationContext)
 
-        binding.button1.setOnClickListener {
-            load("https://ics-creative.github.io/140930_apng/images/elephant_apng_zopfli.png")
-        }
-
-        binding.button2.setOnClickListener {
-            load("http://littlesvr.ca/apng/images/clock.png")
-        }
-
-        binding.button3.setOnClickListener {
-            load("http://littlesvr.ca/apng/images/o_sample.png")
-        }
-
-        buttons.addAll(listOf(binding.button1, binding.button2, binding.button3))
+        binding.button1.setOnClickListener { loadApngFromUrl("https://ics-creative.github.io/140930_apng/images/elephant_apng_zopfli.png") }
+        binding.button2.setOnClickListener { loadApngFromUrl("http://littlesvr.ca/apng/images/clock.png") }
+        binding.button3.setOnClickListener { loadApngFromUrl("http://littlesvr.ca/apng/images/o_sample.png") }
     }
 
     override fun onStart() {
         super.onStart()
-        loadDefaultAPNG()
+        loadDefaultApng()
     }
 
-    private fun loadDefaultAPNG() {
+    /**
+     * Loads the default APNG image from the resources and displays it in the ImageView.
+     */
+    private fun loadDefaultApng() {
         ApngDrawable.decode(resources, R.drawable.apng).apply {
             setTargetDensity(resources.displayMetrics)
             binding.imageView.setImageDrawable(this)
@@ -51,30 +43,38 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun load(url: String) {
+    /**
+     * Initiates the download of an APNG image from the given URL and displays it once downloaded.
+     *
+     * @param url The URL of the APNG image to be downloaded.
+     */
+    private fun loadApngFromUrl(url: String) {
+        setButtonsEnabled(false)
 
-        setEnableButtons(false)
-
-        val CACHE_FILE_NAME = "sample.png"
-        val cacheDir = cacheDir
-        PRDownloader.download(url, cacheDir.absolutePath, CACHE_FILE_NAME)
+        val cacheDirPath = cacheDir.absolutePath
+        PRDownloader.download(url, cacheDirPath, CACHE_FILE_NAME)
             .build()
             .start(object : OnDownloadListener {
                 override fun onDownloadComplete() {
-                    val file = File(cacheDir.absolutePath + "/" + CACHE_FILE_NAME)
-                    loadAPNG(file)
-                    setEnableButtons(true)
+                    val file = File("$cacheDirPath/$CACHE_FILE_NAME")
+                    displayApng(file)
+                    setButtonsEnabled(true)
                 }
 
                 override fun onError(error: com.downloader.Error?) {
-                    setEnableButtons(true)
-                    val message = error?.toString() ?: "some error occurred"
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    setButtonsEnabled(true)
+                    val errorMessage = error?.toString() ?: "some error occurred"
+                    Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_LONG).show()
                 }
             })
     }
 
-    private fun loadAPNG(file: File) {
+    /**
+     * Decodes the provided APNG file and displays it in the ImageView.
+     *
+     * @param file The APNG file to be decoded and displayed.
+     */
+    private fun displayApng(file: File) {
         drawable?.clearAnimationCallbacks()
         drawable = ApngDrawable.decode(file).apply {
             loopCount = 3
@@ -84,11 +84,16 @@ class MainActivity : AppCompatActivity() {
         binding.imageView.setImageDrawable(drawable)
     }
 
-    private fun setEnableButtons(enable: Boolean) {
-        buttons.forEach {
-            it.isEnabled = enable
-        }
+    /**
+     * Enables or disables the buttons based on the provided parameter.
+     *
+     * @param isEnabled A boolean indicating whether the buttons should be enabled or not.
+     */
+    private fun setButtonsEnabled(isEnabled: Boolean) {
+        buttons.forEach { it.isEnabled = isEnabled }
     }
 
-
+    companion object {
+        private const val CACHE_FILE_NAME = "sample.png"
+    }
 }
