@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var drawable: ApngDrawable? = null
-    private val buttons by lazy { listOf(binding.button1, binding.button2, binding.button3) }
+    private val buttons by lazy { listOf(binding.button1, binding.button2, binding.button3, binding.button4) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         PRDownloader.initialize(applicationContext)
 
-        binding.button1.setOnClickListener { loadApngFromUrl("https://ics-creative.github.io/140930_apng/images/elephant_apng_zopfli.png") }
-        binding.button2.setOnClickListener { loadApngFromUrl("http://littlesvr.ca/apng/images/clock.png") }
-        binding.button3.setOnClickListener { loadApngFromUrl("http://littlesvr.ca/apng/images/o_sample.png") }
+        binding.button1.setOnClickListener { loadApngFromUrl("https://raw.githubusercontent.com/h-nimrod/apng_sample/master/img/sample0.png") }
+        binding.button2.setOnClickListener { loadApngFromUrl("https://raw.githubusercontent.com/h-nimrod/apng_sample/master/img/sample2.png") }
+        binding.button3.setOnClickListener { loadApngFromUrl("http://littlesvr.ca/apng/images/clock.png") }
+        binding.button4.setOnClickListener { loadApngFromUrl("http://littlesvr.ca/apng/images/o_sample.png") }
     }
 
     override fun onStart() {

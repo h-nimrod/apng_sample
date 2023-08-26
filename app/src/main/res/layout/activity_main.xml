@@ -26,7 +26,7 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginBottom="16dp"
                 android:text="apng1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +36,8 @@
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:text="apng2"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/button1"
                 app:layout_constraintStart_toEndOf="@id/button1"
                 app:layout_constraintEnd_toStartOf="@id/button3"/>
 
@@ -46,11 +45,19 @@
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:text="apng3"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/button1"
                 app:layout_constraintStart_toEndOf="@id/button2"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="@id/button4"/>
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="apng4"
+            app:layout_constraintBottom_toBottomOf="@id/button1"
+            app:layout_constraintStart_toEndOf="@id/button3"
+            app:layout_constraintEnd_toEndOf="parent"/>
         
     </androidx.constraintlayout.widget.ConstraintLayout>
 
