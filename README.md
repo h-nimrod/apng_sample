@@ -21,5 +21,5 @@ https://en.wikipedia.org/wiki/APNG
 - AndroidX
 - DataBinding
 - Kotlin
+- OkHttp3
 - com.linecorp:apng 1.11.0
-- com.mindorks.android:prdownloader:0.6.0
