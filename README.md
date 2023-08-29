@@ -17,7 +17,7 @@ https://en.wikipedia.org/wiki/APNG
 ## 環境など
 
 - minSdkVersion 21
-- targetSdkVersion 33
+- targetSdkVersion 34
 - AndroidX
 - DataBinding
 - Kotlin
