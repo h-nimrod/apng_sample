@@ -1,0 +1,31 @@
+name: Create Tag from Branch Name
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.pull_request.head.ref, 'release/v') && github.event.pull_request.merged == true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set Tag Name
+        id: version
+        run: |
+          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          NEW_TAG="$(echo $BRANCH_NAME | sed 's/release\///')"
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            tag_name: ${{ env.NEW_TAG }}
+            release_name: ${{ env.NEW_TAG }}
+            draft: false
+            prerelease: false
