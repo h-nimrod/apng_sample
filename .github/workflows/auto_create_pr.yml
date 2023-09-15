@@ -9,7 +9,7 @@ jobs:
   create_pr:
     runs-on: ubuntu-latest
     env:
-      MAIN_BRANCH: main
+      MAIN_BRANCH: master
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
