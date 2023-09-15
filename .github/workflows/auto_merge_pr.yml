@@ -18,7 +18,7 @@ jobs:
         echo $(gh pr list --base master --json number,headRefName)
         PR_NUMBER=$(gh pr list --base master --json number | jq '.[0].number')
         if [ "$PR_NUMBER" != "null" ]; then
-          VERSION=$(echo "gh pr list --base master --json headRefName | jq '.[0].headRefName' | awk -F'release/' '{print $2}')
+          VERSION=v0.9.1
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
           echo "version=v$VERSION" >> $GITHUB_OUTPUT
