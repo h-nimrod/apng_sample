@@ -1,0 +1,25 @@
+ ## APNGのサンプル
+ 
+line/apng-drawable を利用したAPNGのアニメーションサンプルです。 
+
+[https://github.com/line/apng-drawable](https://github.com/line/apng-drawable)
+
+## サンプル画像
+
+https://en.wikipedia.org/wiki/APNG
+
+![](./app/src/main/res/drawable/apng.png)
+
+## スクリーンレコード
+
+![](./sample/record.gif)
+ 
+## 環境など
+
+- minSdkVersion 21
+- targetSdkVersion 34
+- AndroidX
+- DataBinding
+- Kotlin
+- OkHttp3
+- com.linecorp:apng 1.11.0
