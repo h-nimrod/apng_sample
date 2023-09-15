@@ -15,10 +15,10 @@ jobs:
     - name: Auto merge PR
       id: automerge
       run: |
-        echo $(gh pr list --base master --head "release/v*")
-        PR_NUMBER=$(gh pr list --base master --head "release/v*" --json number | jq '.[0].number')
+        echo $(gh pr list --base master --head "release/v\*")
+        PR_NUMBER=$(gh pr list --base master --head "release/v\*" --json number | jq '.[0].number')
         if [ "$PR_NUMBER" != "null" ]; then
-          VERSION=$(echo "gh pr list --base master --head release/v*" | awk -F'release/' '{print $2}')
+          VERSION=$(echo "gh pr list --base master --head release/v\*" | awk -F'release/' '{print $2}')
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
           echo "version=v$VERSION" >> $GITHUB_OUTPUT
