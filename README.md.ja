@@ -1,20 +1,20 @@
- ## APNG sample app
+ ## APNGのサンプル
  
-This is an APNG animation sample app using line/apng-drawable.
+line/apng-drawable を利用したAPNGのアニメーションサンプルです。 
 
 [https://github.com/line/apng-drawable](https://github.com/line/apng-drawable)
 
-## Sample Image
+## サンプル画像
 
 https://en.wikipedia.org/wiki/APNG
 
 ![](./app/src/main/res/drawable/apng.png)
 
-## Screen Record
+## スクリーンレコード
 
 ![](./sample/record.gif)
  
-## Environment
+## 環境など
 
 - minSdkVersion 21
 - targetSdkVersion 34
