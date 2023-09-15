@@ -1,0 +1,46 @@
+name: Auto Merge Release PR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.automerge.outputs.version }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Auto merge PR
+      id: automerge
+      run: |
+        PR_NUMBER=$(gh pr list --base master --head release/v* --json number | jq '.[0].number')
+        if [ "$PR_NUMBER" != "null" ]; then
+          VERSION=$(echo "gh pr list --base master --head release/v*" | awk -F'release/' '{print $2}')
+          gh pr merge $PR_NUMBER --merge
+          echo "Merged PR #$PR_NUMBER"
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+        else
+          echo "No matching PR found"
+        echo "version=" >> $GITHUB_OUTPUT
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create-tag:
+    needs: auto-merge
+    if: needs.auto-merge.outputs.version != ''
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ needs.auto-merge.outputs.version }}
+        release_name: ${{ needs.auto-merge.outputs.version }}
+        draft: false
+        prerelease: false
